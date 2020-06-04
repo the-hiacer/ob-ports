@@ -1,14 +1,14 @@
-# $OpenBSD: Makefile,v 1.183 2020/03/30 20:12:38 rsadowski Exp $
+# $OpenBSD: Makefile,v 1.185 2020/05/26 15:15:09 rsadowski Exp $
 
 DPB_PROPERTIES =	parallel
 
 COMMENT =	portable build system
 
-VER =		3.16.2
+VER =		3.17.2
 EPOCH =		0
 DISTNAME =	cmake-${VER}
 CATEGORIES =	devel
-REVISION =	1
+REVISION =	0
 
 HOMEPAGE =	https://www.cmake.org/
 
@@ -22,7 +22,11 @@ WANTLIB += jsoncpp m rhash uv z
 
 COMPILER =		base-clang ports-gcc
 
-BUILD_DEPENDS +=	textproc/py-sphinx>=1.4
+MODULES =		lang/python
+MODPY_VERSION =		${MODPY_DEFAULT_VERSION_3}
+MODPY_RUNDEP =		No
+
+BUILD_DEPENDS =		textproc/py-sphinx${MODPY_FLAVOR}
 
 LIB_DEPENDS =		archivers/libarchive \
 			devel/libuv \
@@ -38,7 +42,7 @@ CONFIGURE_ARGS =	--datadir=share/cmake \
 			--no-qt-gui \
 			--parallel=${MAKE_JOBS} \
 			--prefix=${PREFIX} \
-			--sphinx-build=${LOCALBASE}/bin/sphinx-build \
+			--sphinx-build=${LOCALBASE}/bin/sphinx-build${MODPY_BIN_SUFFIX} \
 			--sphinx-html \
 			--sphinx-man \
 			--system-libs \
@@ -71,7 +75,6 @@ post-patch:
 		${WRKSRC}/Modules/FindDCMTK.cmake \
 
 pre-configure:
-	cp ${FILESDIR}/*.cmake ${WRKSRC}/Modules/
 	find ${WRKSRC}/Modules -name "*.cmake" -exec ${SUBST_CMD} {} +
 	find ${WRKSRC}/Tests -name "CMakeLists.txt" -exec ${SUBST_CMD} {} +
 	${SUBST_CMD} ${SUBST_FILES}

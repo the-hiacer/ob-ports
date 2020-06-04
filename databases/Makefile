@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.395 2020/05/22 19:58:14 kn Exp $
+# $OpenBSD: Makefile,v 1.397 2020/06/01 20:54:46 sthen Exp $
 
      SUBDIR =
      SUBDIR += architect
@@ -10,8 +10,6 @@
      SUBDIR += gdbm
      SUBDIR += gnats
      SUBDIR += gq
-     SUBDIR += hs-HDBC
-     SUBDIR += hs-HDBC-sqlite3
      SUBDIR += influxdb
      SUBDIR += iodbc
      SUBDIR += jxplorer
@@ -181,6 +179,7 @@
      SUBDIR += py-puppetdb,python3
      SUBDIR += py-pygresql
      SUBDIR += py-pygresql,python3
+     SUBDIR += py-pymysql,python3
      SUBDIR += py-redis
      SUBDIR += py-redis,python3
      SUBDIR += py-sql

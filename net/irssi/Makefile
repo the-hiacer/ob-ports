@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.89 2020/04/13 00:50:47 jca Exp $
+# $OpenBSD: Makefile,v 1.92 2020/05/27 11:08:51 kn Exp $
 
 MULTI_PACKAGES = -main -otr
 
@@ -7,10 +7,13 @@ COMMENT-otr =	OTR (off-the-record) plugin for irssi
 
 V =		1.2.2
 DISTNAME =	irssi-$V
-PKGSPEC =	irssi-=$V
+PKGSPEC-main =	irssi-=$V
 PKGNAME-main =	irssi-$V
 PKGNAME-otr =	irssi-otr-$V
-REVISION =	1
+REVISION =	4
+
+PATCHFILES =	glib-2-63.patch
+PATCH_DIST_STRIP =	-p1
 
 CATEGORIES =	net
 
@@ -38,14 +41,14 @@ WANTLIB-otr =	gcrypt gpg-error iconv intl otr
 LIBTOOL_FLAGS +=	--tag=disable-static
 
 CONFIGURE_STYLE =	gnu
-CONFIGURE_ARGS =	--with-otr=module \
+CONFIGURE_ARGS =	--disable-utf8proc \
+			--with-otr=module \
 			--with-perl-lib=${PREFIX}/libdata/perl5/site_perl \
 			--with-perl=yes \
 			--with-pic \
 			--with-proxy
 CONFIGURE_ENV +=	CPPFLAGS="-I${LOCALBASE}/include" \
-			LDFLAGS="-L${LOCALBASE}/lib" \
-			ac_cv_lib_utf8proc_utf8proc_version=no
+			LDFLAGS="-L${LOCALBASE}/lib"
 SEPARATE_BUILD =	Yes
 
 MAKE_FLAGS =	scriptdir="${SYSCONFDIR}/irssi/scripts" \

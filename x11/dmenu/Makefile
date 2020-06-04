@@ -1,15 +1,16 @@
-# $OpenBSD: Makefile,v 1.25 2019/07/12 20:51:09 sthen Exp $
+# $OpenBSD: Makefile,v 1.27 2020/06/01 20:37:14 jung Exp $
 
 COMMENT=		dynamic menu for X11
 
 V=			4.9
 DISTNAME=		dmenu-${V}
+REVISION=		1
 
 CATEGORIES=		x11
 
 HOMEPAGE=		https://tools.suckless.org/dmenu
 
-MAINTAINER=		Klemens Nanni <kn@openbsd.org>
+MAINTAINER=		Joerg Jung <jung@openbsd.org>
 
 # MIT/X
 PERMIT_PACKAGE=	Yes

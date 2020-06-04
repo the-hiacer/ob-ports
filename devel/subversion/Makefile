@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.179 2020/05/15 14:47:40 ajacoutot Exp $
+# $OpenBSD: Makefile,v 1.181 2020/05/31 19:29:32 sthen Exp $
 
 COMMENT-main=		subversion revision control system
 COMMENT-perl=		perl interface to subversion
@@ -7,13 +7,14 @@ COMMENT-ruby=		ruby interface to subversion
 COMMENT-ap2=		apache2 subversion modules
 COMMENT-gnome-keyring=	GNOME keyring support for subversion
 
-VERSION=		1.13.0
+VERSION=		1.14.0
+REVISION=		0
 DISTNAME=		subversion-${VERSION:S/rc/-rc/}
 PKGNAME-main=		subversion-${VERSION}
+FULLPKGNAME-main=	subversion-${VERSION}${FLAVOR_EXT:S/-python3//}
+FULLPKGPATH-main=	devel/subversion,-main${FLAVOR_EXT:S/-python3//:S/-/,/g}
 FULLPKGNAME-perl=	p5-SVN-${VERSION}
 FULLPKGPATH-perl=	devel/subversion,-perl
-FULLPKGNAME-python=	py-subversion-${VERSION}
-FULLPKGPATH-python=	devel/subversion,-python
 FULLPKGNAME-ruby=	ruby${MODRUBY_BINREV}-subversion-${VERSION}
 FULLPKGPATH-ruby=	devel/subversion,-ruby
 FULLPKGNAME-ap2=	ap2-subversion-${VERSION}
@@ -21,17 +22,11 @@ FULLPKGPATH-ap2=	devel/subversion,-ap2
 FULLPKGNAME-gnome-keyring= gnome-keyring-subversion-${VERSION}
 FULLPKGPATH-gnome-keyring= devel/subversion,-gnome-keyring
 
-REVISION-main=		1
-REVISION-perl=		0
-REVISION-python=	0
-REVISION-ruby=		0
-REVISION-ap2=		0
-
-MODRUBY_REV ?=	2.5
+MODRUBY_REV ?=	2.7
 # Work around for SHARED_LIBS not picking up MODRUBY_BINREV from ruby module
 MODRUBY_BINREV=	${MODRUBY_REV:S/.//}
 
-SO_VERSION=	5.0
+SO_VERSION=	6.0
 SVN_LIBS=	svn_client-1 svn_delta-1 svn_diff-1 svn_fs-1 \
 		svn_fs_base-1 svn_fs_fs-1 svn_fs_util-1 svn_fs_x-1 \
 		svn_ra-1 svn_ra_serf-1 svn_ra_local-1 \
@@ -59,17 +54,30 @@ MASTER_SITES=	${MASTER_SITE_APACHE:=subversion/}
 EXTRACT_SUFX=	.tar.bz2
 
 PSEUDO_FLAVORS=	no_bindings no_ap2 no_perl no_python no_ruby no_gnome-keyring
-FLAVORS=	maintainer_mode
+FLAVORS=	maintainer_mode python3
 FLAVOR?=
 .if ${FLAVOR:Mno_bindings}
 FLAVOR += no_perl no_python no_ruby
+.endif
+
+.if ${FLAVOR:Mpython3}
+FULLPKGNAME-python=	py3-subversion-${VERSION}
+FULLPKGPATH-python=	devel/subversion,python3,-python
+# py-subversion and py3-subversion both install libsvn_swig_py-1;
+# conflict with the other flavour
+PY_CONFLICT=		py-subversion-*
+.else
+FULLPKGNAME-python=	py-subversion-${VERSION}
+FULLPKGPATH-python=	devel/subversion,-python
+PY_CONFLICT=		py3-subversion-*
 .endif
 
 MODULES=	lang/python
 
 WANTLIB=	expat iconv intl lz4 m pthread z
 
-BUILD_DEPENDS=	devel/gettext,-tools
+BUILD_DEPENDS=	devel/gettext,-tools \
+		devel/py3c
 
 MULTI_PACKAGES = -main -ap2 -perl -python -ruby -gnome-keyring
 
@@ -142,8 +150,15 @@ LIB_DEPENDS-gnome-keyring= ${MAINSPEC} \
 RUN_DEPENDS-gnome-keyring=
 
 MAKE_FLAGS=	MAKE=${MAKE_PROGRAM}
-CONFIGURE_STYLE=gnu
-CONFIGURE_ENV=	PYTHON2=${MODPY_BIN} MKDIR="/bin/mkdir -p"
+
+# Before running ./configure we must run autogen.sh to regenerate Python3 SWIG
+# files shipped in the tarball for Python2: https://svn.apache.org/r1877960
+AUTOCONF_VERSION=	2.69
+AUTOMAKE_VERSION=	1.16
+AUTORECONF=		./autogen.sh
+CONFIGURE_STYLE=	autoreconf
+
+CONFIGURE_ENV=	PYTHON=${MODPY_BIN} MKDIR="/bin/mkdir -p"
 CONFIGURE_ARGS+=--with-sasl=${LOCALBASE} \
 		--without-jikes \
 		--without-jdk \
@@ -190,12 +205,13 @@ CONFIGURE_ARGS+=--without-gnome-keyring
 
 TEST_DEPENDS=${MODPY_RUN_DEPENDS}
 TEST_DEPENDS+=	${FULLPKGNAME-gnome-keyring}:${BUILD_PKGPATH},-gnome-keyring
-SUBST_VARS+=	LOCALBASE SO_VERSION MODRUBY_BINREV LIBsvn_swig_ruby-1_VERSION
+SUBST_VARS+=	LOCALBASE SO_VERSION MODRUBY_BINREV
+SUBST_VARS+=	LIBsvn_swig_ruby-1_VERSION MODPY_WANTLIB PY_CONFLICT
 
 pre-patch:
 	@ln -s ${MODPY_BIN} ${WRKDIR}/bin/python
 
-pre-configure:
+post-patch:
 	@${SUBST_CMD} ${WRKSRC}/Makefile.in \
 		${WRKSRC}/subversion/libsvn_subr/auth.c
 	mv ${WRKSRC}/subversion/bindings/swig/ruby/libsvn_swig_ruby{,${MODRUBY_BINREV}}

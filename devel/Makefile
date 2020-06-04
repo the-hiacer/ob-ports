@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1973 2020/05/19 15:34:55 jeremy Exp $
+# $OpenBSD: Makefile,v 1.1981 2020/05/31 19:29:32 sthen Exp $
 
      SUBDIR =
      SUBDIR += 64tass
@@ -199,10 +199,8 @@
      SUBDIR += harfbuzz
      SUBDIR += hasktags
      SUBDIR += help2man
-     SUBDIR += hs-ConfigFile
      SUBDIR += hs-FindBin
      SUBDIR += hs-HUnit
-     SUBDIR += hs-MissingH
      SUBDIR += hs-QuickCheck
      SUBDIR += hs-ansi-terminal
      SUBDIR += hs-ansi-wl-pprint
@@ -1301,6 +1299,7 @@
      SUBDIR += ptlib
      SUBDIR += pudb
      SUBDIR += pudb,python3
+     SUBDIR += py3c
      SUBDIR += pycdc
      SUBDIR += pycharm
      SUBDIR += py-Checker
@@ -1409,6 +1408,7 @@
      SUBDIR += py-coveralls,python3
      SUBDIR += py-cparser
      SUBDIR += py-cparser,python3
+     SUBDIR += py-crc32c,python3
      SUBDIR += py-cstruct
      SUBDIR += py-cstruct,python3
      SUBDIR += py-curtsies,python3
@@ -1417,6 +1417,7 @@
      SUBDIR += py-decorator
      SUBDIR += py-decorator,python3
      SUBDIR += py-decoratortools
+     SUBDIR += py-deprecation,python3
      SUBDIR += py-dispatcher
      SUBDIR += py-dispatcher,python3
      SUBDIR += py-distutils-extra
@@ -1443,13 +1444,13 @@
      SUBDIR += py-extras,python3
      SUBDIR += py-fasteners
      SUBDIR += py-fasteners,python3
-     SUBDIR += py-fastimport
      SUBDIR += py-fastimport,python3
      SUBDIR += py-faulthandler
      SUBDIR += py-fields
      SUBDIR += py-fields,python3
      SUBDIR += py-filebytes
      SUBDIR += py-filebytes,python3
+     SUBDIR += py-filetype,python3
      SUBDIR += py-fixtures
      SUBDIR += py-fixtures,python3
      SUBDIR += py-flaky
@@ -1798,6 +1799,7 @@
      SUBDIR += ruby-cicphash
      SUBDIR += ruby-colorator
      SUBDIR += ruby-colored
+     SUBDIR += ruby-colored2
      SUBDIR += ruby-colorize
      SUBDIR += ruby-commander
      SUBDIR += ruby-concurrent-ruby
@@ -1926,6 +1928,7 @@
      SUBDIR += stm32loader
      SUBDIR += stp
      SUBDIR += subversion
+     SUBDIR += subversion,python3
      SUBDIR += swig
      SUBDIR += t1lib
      SUBDIR += tbb

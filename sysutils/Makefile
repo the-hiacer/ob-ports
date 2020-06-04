@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.567 2020/05/19 15:34:56 jeremy Exp $
+# $OpenBSD: Makefile,v 1.569 2020/06/04 07:24:06 jasper Exp $
 
      SUBDIR =
      SUBDIR += accountsservice
@@ -172,6 +172,7 @@
      SUBDIR += logtail
      SUBDIR += loki
      SUBDIR += lookat
+     SUBDIR += lr
      SUBDIR += lscpu
      SUBDIR += lsyncd
      SUBDIR += mac-robber
@@ -270,7 +271,6 @@
      SUBDIR += py-psutil
      SUBDIR += py-psutil,python3
      SUBDIR += py-pushover,python3
-     SUBDIR += py-pynetbox
      SUBDIR += py-pynetbox,python3
      SUBDIR += py-scandir
      SUBDIR += py-scandir,python3
