@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.1981 2020/05/31 19:29:32 sthen Exp $
+# $OpenBSD: Makefile,v 1.1985 2020/06/09 14:09:57 ajacoutot Exp $
 
      SUBDIR =
      SUBDIR += 64tass
@@ -148,7 +148,6 @@
      SUBDIR += frama-c
      SUBDIR += fribidi
      SUBDIR += gas
-     SUBDIR += gconf-editor
      SUBDIR += gconf2
      SUBDIR += gdb
      SUBDIR += geany
@@ -479,6 +478,7 @@
      SUBDIR += monotone
      SUBDIR += mowgli
      SUBDIR += mpfr
+     SUBDIR += msbuild
      SUBDIR += msgpack
      SUBDIR += msp430
      SUBDIR += mspdebug
@@ -1545,6 +1545,8 @@
      SUBDIR += py-more-itertools
      SUBDIR += py-more-itertools,python3
      SUBDIR += py-mox
+     SUBDIR += py-mox3
+     SUBDIR += py-mox3,python3
      SUBDIR += py-mulpyplexer
      SUBDIR += py-mulpyplexer,python3
      SUBDIR += py-munch
@@ -1769,7 +1771,6 @@
      SUBDIR += pylint
      SUBDIR += pylint,python3
      SUBDIR += pyrex
-     SUBDIR += pysvn
      SUBDIR += pyusb
      SUBDIR += qbs
      SUBDIR += qgit

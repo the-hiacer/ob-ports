@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
 # ex:ts=8 sw=4:
-# $OpenBSD: Quirks.pm,v 1.971 2020/06/04 07:24:06 jasper Exp $
+# $OpenBSD: Quirks.pm,v 1.979 2020/06/10 07:24:28 ajacoutot Exp $
 #
 # Copyright (c) 2009 Marc Espie <espie@openbsd.org>
 #
@@ -426,6 +426,8 @@ my $stem_extensions = {
 	'py-fastimport' => 'py3-fastimport',
 	'py-impacket' => 'py3-impacket',
 	'py-pynetbox' => 'py3-pynetbox',
+	'py-libvirt' => 'py3-libvirt',
+	'py-libxml' => 'py3-libxml',
 };
 
 my $obsolete_reason = {
@@ -1584,6 +1586,14 @@ my $obsolete_reason = {
 	'hs-ConfigFile' => 5,
 	'hs-MissingH' => 5,
 	'hs-HaXml' => 5,
+	'py-gstreamer' => 5,
+	'py-libxslt' => 3,
+	'gconf-editor' => 3,
+	'amide' => 3,
+	'xmedcon' => 3,
+	'gq' => 3,
+	'gnome-doc-utils' => 3,
+	'rarian' => 3,
 };
 
 # reasons for obsolete packages

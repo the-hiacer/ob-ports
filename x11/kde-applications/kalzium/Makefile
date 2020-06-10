@@ -1,9 +1,10 @@
-# $OpenBSD: Makefile,v 1.9 2020/06/03 05:13:36 rsadowski Exp $
+# $OpenBSD: Makefile,v 1.11 2020/06/09 17:34:15 chrisz Exp $
 
 COMMENT =	periodic table of elements
 DISTNAME =	kalzium-${VERSION}
-CATEGORIES =	education math
 REVISION =	0
+CATEGORIES =	education math
+REVISION =	1
 
 HOMEPAGE =	https://edu.kde.org/kalzium/
 
@@ -20,6 +21,7 @@ WANTLIB += c m openbabel
 MODKDE5_DESKTOP_FILE = yes
 MODKDE5_ICON_CACHE = yes
 MODKDE5_TRANSLATIONS = yes
+MODKF5_I18N_CONFLICT = yes
 MODKF5_L10N_CONFLICT = yes
 MODKDE5_DOCS = yes
 

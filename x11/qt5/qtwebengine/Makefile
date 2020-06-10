@@ -1,14 +1,17 @@
-# $OpenBSD: Makefile,v 1.8 2020/05/25 11:51:12 sthen Exp $
+# $OpenBSD: Makefile,v 1.10 2020/06/09 07:14:46 jasper Exp $
 
 USE_WXNEEDED =		Yes
 
 ONLY_FOR_ARCHS =	amd64 aarch64 i386
+BROKEN-i386 = 		long hangs; uses too much RAM to build
+
 .if ${MACHINE_ARCH} == "i386"
 DPB_PROPERTIES =	lonesome
 .endif
 
 # Many parts are copied from www/chromium port, so keep in sync
 QT5NAME =		QtWebEngine
+REVISION =		0
 
 COMMENT =		Chromium-based web engine for Qt5
 
